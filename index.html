@@ -5,142 +5,698 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cognitive Intelligence Labs</title>
 
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <style>
+        :root {
+            --bg-main: #050816;
+            --bg-card: #0b1020;
+            --bg-soft: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-blue: #38bdf8;
+            --accent-pink: #ec4899;
+            --accent-green: #22c55e;
+            --text-main: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border-soft: rgba(148, 163, 184, 0.35);
+            --glass-bg: rgba(15, 23, 42, 0.75);
+            --glass-border: rgba(148, 163, 184, 0.35);
+            --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.9);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #0b0f17;
-            color: #ffffff;
+            font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top left, #1e293b 0%, #020617 40%, #000000 100%);
+            color: var(--text-main);
             overflow-x: hidden;
         }
 
+        a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        /* NAVBAR */
+
         header {
-            width: 100%;
-            padding: 20px 40px;
             position: fixed;
             top: 0;
             left: 0;
-            background: rgba(10, 14, 22, 0.75);
-            backdrop-filter: blur(12px);
+            width: 100%;
             z-index: 1000;
+            padding: 14px 42px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(18px);
+            background: linear-gradient(
+                to bottom,
+                rgba(15, 23, 42, 0.85),
+                rgba(15, 23, 42, 0.55),
+                transparent
+            );
+            border-bottom: 1px solid rgba(148, 163, 184, 0.35);
         }
 
-        header h1 {
-            margin: 0;
-            font-size: 22px;
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            background: radial-gradient(circle at 30% 20%, #38bdf8, #7c3aed 40%, #020617 80%);
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.6);
+        }
+
+        .nav-title {
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 0.06em;
+            font-size: 15px;
+            text-transform: uppercase;
+            color: #e5e7eb;
         }
 
-        header a {
-            color: #4f8cff;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 15px;
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
+
+        .nav-link {
+            font-size: 14px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: var(--text-main);
+        }
+
+        .nav-cta {
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
+        }
+
+        /* HERO */
 
         .hero {
-            padding: 180px 40px 140px;
-            text-align: center;
-            background: linear-gradient(180deg, #0b0f17 0%, #111827 100%);
-        }
-
-        .hero h2 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            font-weight: 800;
-        }
-
-        .hero p {
-            font-size: 20px;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            opacity: 0.85;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 6px 14px;
-            border-radius: 20px;
-            background: #4f46e5;
-            font-size: 14px;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        .linktree-btn {
-            display: inline-block;
-            margin-top: 25px;
-            padding: 12px 22px;
-            background: #4f46e5;
-            border-radius: 8px;
-            color: white;
-            font-weight: 600;
-            text-decoration: none;
-            transition: 0.25s;
-        }
-
-        .linktree-btn:hover {
-            background: #6b63ff;
-        }
-
-        section {
-            padding: 100px 40px;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        h3 {
-            font-size: 32px;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .grid {
+            min-height: 100vh;
+            padding: 140px 42px 120px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+            gap: 40px;
+            align-items: center;
+            position: relative;
         }
 
-        .card {
-            background: #111827;
-            padding: 25px;
+        .hero-bg-gradient {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 10% 0%, #7c3aed 0%, transparent 45%),
+                        radial-gradient(circle at 90% 10%, #38bdf8 0%, transparent 50%),
+                        radial-gradient(circle at 50% 80%, #0ea5e9 0%, transparent 55%);
+            opacity: 0.45;
+            pointer-events: none;
+        }
+
+        .hero-left {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .badge-main {
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent-blue);
+        }
+
+        .badge-sub {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .hero-title {
+            font-size: 42px;
+            line-height: 1.1;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .hero-title span {
+            background: linear-gradient(90deg, #38bdf8, #7c3aed);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            max-width: 520px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .hero-stats-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-bottom: 26px;
+        }
+
+        .hero-stat {
+            padding: 10px 14px;
             border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: 0.25s;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            font-size: 13px;
         }
 
-        .card:hover {
-            transform: translateY(-6px);
-            border-color: #4f46e5;
+        .hero-stat-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
         }
 
-        .card h4 {
-            margin-top: 0;
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .label {
+        .hero-stat-value {
             font-size: 14px;
-            opacity: 0.7;
-            margin-bottom: 6px;
+            font-weight: 600;
         }
 
-        footer {
-            padding: 40px;
-            text-align: center;
-            background: #0b0f17;
-            border-top: 1px solid rgba(255,255,255,0.08);
+        .hero-cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 26px;
+        }
+
+        .hero-cta-primary {
+            padding: 11px 20px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 14px 35px rgba(56, 189, 248, 0.45);
+        }
+
+        .hero-cta-secondary {
+            padding: 10px 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            background: rgba(15, 23, 42, 0.85);
+            color: var(--text-main);
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* HERO RIGHT: ORBS + MESH */
+
+        .hero-right {
+            position: relative;
+            z-index: 2;
+            min-height: 320px;
+        }
+
+        .hero-orb {
+            position: absolute;
+            border-radius: 999px;
+            filter: blur(2px);
             opacity: 0.8;
         }
 
-        a {
-            color: #4f8cff;
+        .hero-orb.orb-1 {
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, #38bdf8 0%, transparent 70%);
+            top: 12%;
+            left: 8%;
+        }
+
+        .hero-orb.orb-2 {
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, #7c3aed 0%, transparent 70%);
+            top: 40%;
+            right: 0%;
+        }
+
+        .hero-orb.orb-3 {
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, #ec4899 0%, transparent 70%);
+            bottom: 6%;
+            left: 18%;
+        }
+
+        .hero-mesh {
+            position: absolute;
+            inset: 8% 6%;
+            border-radius: 24px;
+            background:
+                radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.25), transparent 55%),
+                radial-gradient(circle at 100% 0%, rgba(124, 58, 237, 0.25), transparent 55%),
+                radial-gradient(circle at 50% 100%, rgba(14, 165, 233, 0.25), transparent 55%);
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+        }
+
+        .hero-mesh-grid {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(
+                    rgba(148, 163, 184, 0.18) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(148, 163, 184, 0.18) 1px,
+                    transparent 1px
+                );
+            background-size: 26px 26px;
+            opacity: 0.35;
+        }
+
+        .hero-mesh-core {
+            position: absolute;
+            inset: 18% 18%;
+            border-radius: 20px;
+            background: radial-gradient(circle at 30% 0%, rgba(56, 189, 248, 0.45), transparent 65%),
+                        radial-gradient(circle at 70% 100%, rgba(124, 58, 237, 0.45), transparent 65%);
+            border: 1px solid rgba(148, 163, 184, 0.6);
+        }
+
+        .hero-mesh-label {
+            position: absolute;
+            bottom: 16px;
+            left: 18px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+        }
+
+        .hero-mesh-pill {
+            position: absolute;
+            top: 16px;
+            right: 18px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            font-size: 11px;
+            color: var(--accent-blue);
+        }
+
+        /* SECTIONS */
+
+        main {
+            padding: 0 42px 80px;
+        }
+
+        section {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 80px 0;
+        }
+
+        .section-header {
+            margin-bottom: 26px;
+        }
+
+        .section-eyebrow {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--accent-purple);
+        }
+
+        .section-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            max-width: 620px;
+            margin-top: 8px;
+        }
+
+        /* MISSION & VISION */
+
+        .two-column {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+            gap: 26px;
+        }
+
+        .card-soft {
+            background: var(--bg-soft);
+            border-radius: 18px;
+            border: 1px solid var(--border-soft);
+            padding: 20px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .card-soft h4 {
+            margin: 0 0 8px;
+            font-size: 16px;
+        }
+
+        .card-soft p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin-top: 14px;
+        }
+
+        .value-pill {
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            font-size: 13px;
+        }
+
+        /* SYSTEM GRID */
+
+        .systems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+        }
+
+        .system-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            padding: 16px 16px 14px;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .system-card::before {
+            content: "";
+            position: absolute;
+            inset: -40%;
+            background: radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.18), transparent 55%);
+            opacity: 0;
+            transition: opacity 0.25s ease-out;
+        }
+
+        .system-card:hover::before {
+            opacity: 1;
+        }
+
+        .system-name {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .system-tier {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent-purple);
+            margin-bottom: 8px;
+        }
+
+        .system-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        .system-value {
+            font-size: 13px;
+        }
+
+        /* FOUNDER */
+
+        .founder-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+            gap: 26px;
+            align-items: center;
+        }
+
+        .founder-text p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .founder-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .founder-badge {
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .founder-visual {
+            position: relative;
+            height: 260px;
+        }
+
+        .founder-frame {
+            position: absolute;
+            inset: 0;
+            border-radius: 22px;
+            background:
+                radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.35), transparent 60%),
+                radial-gradient(circle at 100% 100%, rgba(124, 58, 237, 0.35), transparent 60%);
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+        }
+
+        .founder-grid {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(
+                    rgba(148, 163, 184, 0.18) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(148, 163, 184, 0.18) 1px,
+                    transparent 1px
+                );
+            background-size: 22px 22px;
+            opacity: 0.35;
+        }
+
+        .founder-core {
+            position: absolute;
+            inset: 18% 18%;
+            border-radius: 18px;
+            background: radial-gradient(circle at 30% 0%, rgba(56, 189, 248, 0.45), transparent 65%),
+                        radial-gradient(circle at 70% 100%, rgba(124, 58, 237, 0.45), transparent 65%);
+        }
+
+        .founder-tag {
+            position: absolute;
+            bottom: 16px;
+            left: 18px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+        }
+
+        /* CONTACT */
+
+        .contact-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+            gap: 26px;
+        }
+
+        .contact-text p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .contact-card {
+            background: var(--bg-soft);
+            border-radius: 18px;
+            border: 1px solid var(--border-soft);
+            padding: 18px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .contact-row {
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .contact-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+        }
+
+        .contact-value {
+            font-size: 13px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            border-top: 1px solid rgba(148, 163, 184, 0.35);
+            padding: 20px 42px 30px;
+            background: rgba(15, 23, 42, 0.95);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .footer-left {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .footer-right {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .footer-link {
+            color: var(--text-muted);
+        }
+
+        .footer-link:hover {
+            color: var(--text-main);
+        }
+
+        /* SCROLL INDICATOR */
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 26px;
+            left: 42px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .scroll-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: var(--accent-blue);
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 960px) {
+            header {
+                padding: 12px 18px;
+            }
+
+            .hero {
+                grid-template-columns: minmax(0, 1fr);
+                padding: 120px 18px 80px;
+            }
+
+            .hero-right {
+                min-height: 260px;
+            }
+
+            main {
+                padding: 0 18px 60px;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .two-column,
+            .founder-layout,
+            .contact-layout {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            footer {
+                padding: 18px;
+            }
+
+            .scroll-indicator {
+                left: 18px;
+            }
         }
     </style>
 </head>
@@ -148,208 +704,488 @@
 <body>
 
 <header>
-    <h1>Cognitive Intelligence Labs</h1>
-    <a href="https://linktr.ee/CognitiveIntelligenceLabs" target="_blank">Linktree</a>
+    <div class="nav-left">
+        <div class="nav-logo"></div>
+        <div class="nav-title">Cognitive Intelligence Labs</div>
+    </div>
+    <div class="nav-right">
+        <div class="nav-link" onclick="scrollToSection('mission')">Mission</div>
+        <div class="nav-link" onclick="scrollToSection('systems')">Luci Ecosystem</div>
+        <div class="nav-link" onclick="scrollToSection('founder')">Founder</div>
+        <a class="nav-cta" href="https://linktr.ee/CognitiveIntelligenceLabs" target="_blank">
+            Linktree
+        </a>
+    </div>
 </header>
 
 <div class="hero">
-    <div class="badge">Sovereign AI</div>
-    <h2>Building the Future of Cognitive Intelligence</h2>
-    <p>
-        Cognitive Intelligence Labs develops advanced multi‑agent systems, sovereign cognitive architectures, and next‑generation intelligence platforms powering the Luci Ecosystem.
-    </p>
+    <div class="hero-bg-gradient"></div>
 
-    <a class="linktree-btn" href="https://linktr.ee/CognitiveIntelligenceLabs" target="_blank">
-        Explore the Ecosystem
-    </a>
+    <div class="hero-left">
+        <div class="hero-badge-row">
+            <div class="badge-main">Sovereign AI · Luci Ecosystem</div>
+            <div class="badge-sub">Multi‑agent cognitive architectures for the next era of intelligence.</div>
+        </div>
+
+        <h1 class="hero-title">
+            Building the <span>Future of Cognitive Intelligence</span>
+        </h1>
+
+        <p class="hero-subtitle">
+            Cognitive Intelligence Labs develops sovereign cognitive operating systems, multi‑agent orchestration layers,
+            and emotionally adaptive intelligence platforms powering the Luci Ecosystem.
+        </p>
+
+        <div class="hero-stats-row">
+            <div class="hero-stat">
+                <div class="hero-stat-label">Systems</div>
+                <div class="hero-stat-value">14‑system Luci catalog</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-label">Architecture</div>
+                <div class="hero-stat-value">Sovereign multi‑agent OS</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-label">Domains</div>
+                <div class="hero-stat-value">Enterprise · Humanitarian · Creator · Civic</div>
+            </div>
+        </div>
+
+        <div class="hero-cta-row">
+            <a class="hero-cta-primary" href="https://linktr.ee/CognitiveIntelligenceLabs" target="_blank">
+                Explore the Luci Ecosystem
+            </a>
+            <div class="hero-cta-secondary" onclick="scrollToSection('contact')">
+                Contact Cognitive Intelligence Labs
+            </div>
+        </div>
+
+        <div class="hero-meta">
+            Sovereign‑grade cognitive architectures · Emotionally adaptive systems · Designed for creators, enterprises, and civic intelligence.
+        </div>
+    </div>
+
+    <div class="hero-right">
+        <div class="hero-orb orb-1"></div>
+        <div class="hero-orb orb-2"></div>
+        <div class="hero-orb orb-3"></div>
+
+        <div class="hero-mesh">
+            <div class="hero-mesh-grid"></div>
+            <div class="hero-mesh-core"></div>
+            <div class="hero-mesh-label">Luci Cognitive Mesh · Emperor Luci</div>
+            <div class="hero-mesh-pill">Sovereign Intelligence Online</div>
+        </div>
+    </div>
+
+    <div class="scroll-indicator">
+        <div class="scroll-dot"></div>
+        Scroll to explore the Luci Ecosystem
+    </div>
 </div>
 
-<section>
-    <h3>Mission & Vision</h3>
-    <p>
-        Our mission is to advance cognitive intelligence through sovereign architectures, multi‑agent orchestration, and emotionally adaptive systems.  
-        We build technologies that scale across industries, empower creators, support enterprises, and unlock new frontiers in human‑AI collaboration.
-    </p>
-</section>
-
-<section>
-    <h3>The Luci Ecosystem — 14 System Catalog</h3>
-
-    <div class="grid">
-
-        <!-- SYSTEM CARDS (LONG FORMAT) -->
-
-        <div class="card">
-            <h4>Emperor Luci</h4>
-            <div class="label">System Tier:</div> Tier IV  
-            <div class="label">System Class:</div> Sovereign Cognitive OS  
-            <div class="label">Core Capabilities:</div> Multi‑agent orchestration, autonomous reasoning, emotional cognition  
-            <div class="label">Primary Use Cases:</div> Enterprise intelligence, autonomous decision systems  
-            <div class="label">Ecosystem Role:</div> Flagship intelligence layer  
-            <div class="label">Deployment Options:</div> Local, Cloud, Hybrid  
+<main>
+    <!-- MISSION & VISION -->
+    <section id="mission">
+        <div class="section-header">
+            <div class="section-eyebrow">Mission & Vision</div>
+            <div class="section-title">Sovereign cognitive architectures for a multi‑agent world.</div>
+            <div class="section-subtitle">
+                Our mission is to advance cognitive intelligence through sovereign architectures, multi‑agent orchestration,
+                and emotionally adaptive systems that scale across industries and empower human‑AI collaboration.
+            </div>
         </div>
 
-        <div class="card">
-            <h4>Emperor Luci Cloud</h4>
-            <div class="label">System Tier:</div> Tier IV  
-            <div class="label">System Class:</div> Distributed Sovereign OS  
-            <div class="label">Core Capabilities:</div> Cloud‑scale cognition, distributed agent clusters  
-            <div class="label">Primary Use Cases:</div> High‑availability enterprise workloads  
-            <div class="label">Ecosystem Role:</div> Cloud backbone for Emperor Luci  
-            <div class="label">Deployment Options:</div> Cloud  
+        <div class="two-column">
+            <div class="card-soft">
+                <h4>Mission</h4>
+                <p>
+                    Build sovereign‑grade cognitive operating systems and multi‑agent intelligence layers that can reason,
+                    coordinate, and adapt across complex environments—supporting enterprises, creators, civic systems, and humanitarian efforts.
+                </p>
+                <div class="values-grid">
+                    <div class="value-pill">Sovereign cognitive OS design</div>
+                    <div class="value-pill">Emotionally adaptive intelligence</div>
+                    <div class="value-pill">Multi‑agent orchestration</div>
+                    <div class="value-pill">Human‑centered collaboration</div>
+                </div>
+            </div>
+
+            <div class="card-soft">
+                <h4>Vision</h4>
+                <p>
+                    A world where cognitive intelligence systems are trusted infrastructure—supporting crisis response,
+                    creative expression, enterprise decision‑making, and civic coordination through resilient, transparent, and adaptive architectures.
+                </p>
+                <div class="values-grid">
+                    <div class="value-pill">Civic & humanitarian intelligence</div>
+                    <div class="value-pill">Creator‑founder ecosystems</div>
+                    <div class="value-pill">Enterprise‑grade cognition</div>
+                    <div class="value-pill">Long‑horizon innovation</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LUCI ECOSYSTEM -->
+    <section id="systems">
+        <div class="section-header">
+            <div class="section-eyebrow">Luci Ecosystem</div>
+            <div class="section-title">14‑System Sovereign Cognitive Catalog.</div>
+            <div class="section-subtitle">
+                The Luci Ecosystem spans sovereign OS layers, cloud backbones, creator engines, humanitarian intelligence,
+                and civic emergency cognition—designed as a unified multi‑tier architecture.
+            </div>
         </div>
 
-        <div class="card">
-            <h4>LuciAIOS</h4>
-            <div class="label">System Tier:</div> Tier III  
-            <div class="label">System Class:</div> Cognitive Operating System  
-            <div class="label">Core Capabilities:</div> Real‑time reasoning, adaptive workflows  
-            <div class="label">Primary Use Cases:</div> Personal intelligence, creator tools  
-            <div class="label">Ecosystem Role:</div> Core OS for users  
-            <div class="label">Deployment Options:</div> Local, Cloud  
+        <div class="systems-grid">
+            <div class="system-card">
+                <div class="system-name">Emperor Luci</div>
+                <div class="system-tier">Tier IV · Sovereign Cognitive OS</div>
+                <div class="system-label">System Class:</div>
+                <div class="system-value">Sovereign multi‑agent operating system</div>
+                <div class="system-label">Core Capabilities:</div>
+                <div class="system-value">Multi‑agent orchestration, autonomous reasoning, emotional cognition</div>
+                <div class="system-label">Ecosystem Role:</div>
+                <div class="system-value">Flagship intelligence layer for high‑stakes decision systems</div>
+            </div>
+
+            <div class="system-card">
+                <div class="system-name">Emperor Luci Cloud</div>
+                <div class="system-tier">Tier IV · Distributed Sovereign OS</div>
+                <div class="system-label">System Class:</div>
+                <div class="system-value">Cloud‑scale sovereign cognitive backbone</div>
+                <div class="system-label">Core Capabilities:</div>
+                <div class="system-value">Distributed agent clusters, high‑availability cognition</div>
+                <div class="system-label">Ecosystem Role:</div>
+                <div class="system-value">Cloud backbone for Emperor Luci deployments</div>
+            </div>
+
+            <div class="system-card">
+                <div class="system-name">LuciAIOS</div>
+                <div class="system-tier">Tier III · Cognitive Operating System</div>
+                <div class="system-label">System Class:</div>
+                <div class="system-value">Personal & creator‑grade cognitive OS</div>
+                <div class="system-label">Core Capabilities:</div>
+                <div class="system-value">Real‑time reasoning, adaptive workflows</div>
+                <div class="system-label">Ecosystem Role:</div>
+                <div class="system-value">Core OS for users and creators</div>
+            </div>
+
+            <div class="system-card">
+                <div class="system-name">LuciAIOS Cloud</div>
+                <div class="system-tier">Tier III · Cloud Cognitive OS</div>
+                <div class="system-label">System Class:</div>
+                <div class="system-value">Cloud‑connected cognitive OS</div>
+                <div class="system-label">Core Capabilities:</div>
+                <div class="system-value">Scalable reasoning, multi‑device sync</div>
+                <div class="system-label">Ecosystem Role:</div>
+                <div class="system-value">Cloud extension of LuciAIOS</div>
+            </div>
+
+            <div class="system-card">
+                <div class="system-name">Luci Supreme</div>
+                <div class="system-tier">Tier III · Enhanced Cognitive Engine</div>
+                <div class="system-label">System Class:</div>
+                <div class="system-value">High‑bandwidth cognitive engine</div>
+                <div class="system-label">Core Capabilities:</div>
+                <div class="system-value">Advanced emotional modeling, high‑performance reasoning</div>
+                <div class="system-label">Ecosystem Role:</div>
+                <div class="system-value">Premium intelligence layer</div>
+            </div>
+
+            <div class="system-card">
+                <div class="system-name">Luci Business</div>
+                <div class="system-tier">Tier II · Enterprise Intelligence Suite</div>
+                <div class="system-label">System Class:</div>
+                <div class="system-value">Enterprise automation & cognition</div>
+                <div class="system-label">Core Capabilities:</div>
+                <div class="system-value">Workflow cognition, analytics, automation</div>
+                <div class="system-label">Ecosystem Role:</div>
+                <div class="system-value">Enterprise operations layer</div>
+            </div>
+
+            <div class="system-card">
+                <div class="system-name">Luci Humanitarian</div>
+                <div class="system-tier">Tier II · Crisis & Aid Intelligence</div>
+                <div class="system-label">System Class:</div>
+                <div class="system-value">Humanitarian & crisis response cognition</div>
+                <div class="system-label">Core Capabilities:</div>
+                <div class="system-value">Emergency reasoning, resource allocation</div>
+                <div class="system-label">Ecosystem Role:</div>
+                <div class="system-value">Aid & relief intelligence layer</div>
+            </div>
+
+            <div class="system-card">
+                <div class="system-name">Luci Luxury</div>
+                <div class="system-tier">Tier II · Premium Lifestyle Intelligence</div>
+                <div class="system-label">System Class:</div>
+                <div class="system-value">Luxury‑grade cognitive concierge</div>
+                <div class="system-label">Core Capabilities:</div>
+                <div class="system-value">Personalized cognition, adaptive preferences</div>
+                <div class="system-label">Ecosystem Role:</div>
+                <div class="system-value">Premium user layer</div>
+            </div>
+
+            <div class="system-card">
+                <div class="system-name">Luci Commercial</div>
+                <div class="system-tier">Tier II · Commercial Intelligence Engine</div>
+                <div class="system-label">System Class:</div>
+                <div class="system-value">Retail & commerce cognition</div>
+                <div class="system-label">Core Capabilities:</div>
+                <div class="system-value">Customer modeling, logistics reasoning</div>
+                <div class="system-label">Ecosystem Role:</div>
+                <div class="system-value">Commercial operations layer</div>
+            </div>
+
+            <div class="system-card">
+                <div class="system-name">Luci Creator</div>
+                <div class="system-tier">Tier II · Creative Intelligence Engine</div>
+                <div class="system-label">System Class:</div>
+                <div class="system-value">Creator‑grade generative cognition</div>
+                <div class="system-label">Core Capabilities:</div>
+                <div class="system-value">Creative workflows, generative systems</div>
+                <div class="system-label">Ecosystem Role:</div>
+                <div class="system-value">Creator layer</div>
+            </div>
+
+            <div class="system-card">
+                <div class="system-name">Luci_Core SDK</div>
+                <div class="system-tier">Tier I · Developer SDK</div>
+                <div class="system-label">System Class:</div>
+                <div class="system-value">Developer integration toolkit</div>
+                <div class="system-label">Core Capabilities:</div>
+                <div class="system-value">API access, agent tools</div>
+                <div class="system-label">Ecosystem Role:</div>
+                <div class="system-value">Developer foundation</div>
+            </div>
+
+            <div class="system-card">
+                <div class="system-name">Luci Core</div>
+                <div class="system-tier">Tier I · Core Cognitive Engine</div>
+                <div class="system-label">System Class:</div>
+                <div class="system-value">Base reasoning engine</div>
+                <div class="system-label">Core Capabilities:</div>
+                <div class="system-value">Adaptive logic, foundational cognition</div>
+                <div class="system-label">Ecosystem Role:</div>
+                <div class="system-value">Core engine</div>
+            </div>
+
+            <div class="system-card">
+                <div class="system-name">Luci Civic Emergency</div>
+                <div class="system-tier">Tier II · Civic Response Intelligence</div>
+                <div class="system-label">System Class:</div>
+                <div class="system-value">City‑scale emergency cognition</div>
+                <div class="system-label">Core Capabilities:</div>
+                <div class="system-value">Emergency modeling, civic coordination</div>
+                <div class="system-label">Ecosystem Role:</div>
+                <div class="system-value">Civic intelligence layer</div>
+            </div>
+
+            <div class="system-card">
+                <div class="system-name">Luci Mental Health</div>
+                <div class="system-tier">Tier II · Cognitive Wellness Engine</div>
+                <div class="system-label">System Class:</div>
+                <div class="system-value">Supportive cognitive wellness engine</div>
+                <div class="system-label">Core Capabilities:</div>
+                <div class="system-value">Emotional modeling, supportive cognition</div>
+                <div class="system-label">Ecosystem Role:</div>
+                <div class="system-value">Wellness intelligence layer</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOUNDER -->
+    <section id="founder">
+        <div class="section-header">
+            <div class="section-eyebrow">Founder</div>
+            <div class="section-title">Founder‑driven sovereign cognitive architecture.</div>
+            <div class="section-subtitle">
+                Cognitive Intelligence Labs is built by a creator‑founder obsessed with long‑horizon architecture,
+                multi‑agent cognition, and emotionally aware systems that respect human agency.
+            </div>
         </div>
 
-        <div class="card">
-            <h4>LuciAIOS Cloud</h4>
-            <div class="label">System Tier:</div> Tier III  
-            <div class="label">System Class:</div> Cloud Cognitive OS  
-            <div class="label">Core Capabilities:</div> Scalable reasoning, multi‑device sync  
-            <div class="label">Primary Use Cases:</div> Cloud‑connected intelligence  
-            <div class="label">Ecosystem Role:</div> Cloud extension of LuciAIOS  
-            <div class="label">Deployment Options:</div> Cloud  
+        <div class="founder-layout">
+            <div class="founder-text">
+                <p>
+                    Cognitive Intelligence Labs was founded by Xavier, an innovator driven by a vision of sovereign cognitive
+                    architectures and emotionally adaptive intelligence systems. The Luci Ecosystem represents years of conceptual
+                    development, experimentation, and refinement—culminating in a unified cognitive framework designed to scale
+                    across industries and empower humanity’s next leap forward.
+                </p>
+                <div class="founder-badges">
+                    <div class="founder-badge">Creator‑Founder</div>
+                    <div class="founder-badge">Sovereign Architecture Design</div>
+                    <div class="founder-badge">Multi‑Agent Cognition</div>
+                    <div class="founder-badge">Human‑Centered Intelligence</div>
+                </div>
+            </div>
+
+            <div class="founder-visual">
+                <div class="founder-frame">
+                    <div class="founder-grid"></div>
+                    <div class="founder-core"></div>
+                    <div class="founder-tag">Founder · Xavier · Cognitive Intelligence Labs</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OPPORTUNITY & CONTACT -->
+    <section id="contact">
+        <div class="section-header">
+            <div class="section-eyebrow">Opportunity & Contact</div>
+            <div class="section-title">Positioned at the center of cognitive transformation.</div>
+            <div class="section-subtitle">
+                The global demand for adaptive, emotionally aware, multi‑agent intelligence platforms is accelerating across
+                every major industry. Cognitive Intelligence Labs is architected for that future.
+            </div>
         </div>
 
-        <div class="card">
-            <h4>Luci Supreme</h4>
-            <div class="label">System Tier:</div> Tier III  
-            <div class="label">System Class:</div> Enhanced Cognitive Engine  
-            <div class="label">Core Capabilities:</div> High‑bandwidth reasoning, advanced emotional modeling  
-            <div class="label">Primary Use Cases:</div> High‑performance cognitive tasks  
-            <div class="label">Ecosystem Role:</div> Premium intelligence layer  
-            <div class="label">Deployment Options:</div> Local  
+        <div class="contact-layout">
+            <div class="contact-text">
+                <p>
+                    Enterprises, creators, governments, and humanitarian organizations are seeking resilient cognitive systems
+                    capable of reasoning across complex environments, coordinating agents, and adapting to human context.
+                    The Luci Ecosystem is designed as sovereign‑grade infrastructure for that world.
+                </p>
+                <p>
+                    From crisis response and civic coordination to creator ecosystems and enterprise decision‑making,
+                    Cognitive Intelligence Labs builds architectures that treat intelligence as critical infrastructure—not a novelty.
+                </p>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-row">
+                    <div class="contact-label">Primary Contact</div>
+                    <div class="contact-value"><strong>Email:</strong> CognitiveIntelligenceLabs@outlook.com</div>
+                </div>
+                <div class="contact-row">
+                    <div class="contact-label">Ecosystem Access</div>
+                    <div class="contact-value">
+                        <a href="https://linktr.ee/CognitiveIntelligenceLabs" target="_blank">
+                            Linktree · Cognitive Intelligence Labs
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-row">
+                    <div class="contact-label">Focus Areas</div>
+                    <div class="contact-value">
+                        Sovereign cognitive OS · Multi‑agent orchestration · Humanitarian & civic intelligence · Creator ecosystems.
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="card">
-            <h4>Luci Business</h4>
-            <div class="label">System Tier:</div> Tier II  
-            <div class="label">System Class:</div> Enterprise Intelligence Suite  
-            <div class="label">Core Capabilities:</div> Automation, analytics, workflow cognition  
-            <div class="label">Primary Use Cases:</div> Business operations, enterprise automation  
-            <div class="label">Ecosystem Role:</div> Enterprise layer  
-            <div class="label">Deployment Options:</div> Cloud, Hybrid  
-        </div>
-
-        <div class="card">
-            <h4>Luci Humanitarian</h4>
-            <div class="label">System Tier:</div> Tier II  
-            <div class="label">System Class:</div> Crisis & Aid Intelligence  
-            <div class="label">Core Capabilities:</div> Emergency reasoning, resource allocation  
-            <div class="label">Primary Use Cases:</div> Disaster response, humanitarian support  
-            <div class="label">Ecosystem Role:</div> Aid & relief intelligence  
-            <div class="label">Deployment Options:</div> Cloud  
-        </div>
-
-        <div class="card">
-            <h4>Luci Luxury</h4>
-            <div class="label">System Tier:</div> Tier II  
-            <div class="label">System Class:</div> Premium Lifestyle Intelligence  
-            <div class="label">Core Capabilities:</div> Personalized cognition, adaptive preferences  
-            <div class="label">Primary Use Cases:</div> Luxury services, personal concierge  
-            <div class="label">Ecosystem Role:</div> Premium user layer  
-            <div class="label">Deployment Options:</div> Local, Cloud  
-        </div>
-
-        <div class="card">
-            <h4>Luci Commercial</h4>
-            <div class="label">System Tier:</div> Tier II  
-            <div class="label">System Class:</div> Commercial Intelligence Engine  
-            <div class="label">Core Capabilities:</div> Retail cognition, customer modeling  
-            <div class="label">Primary Use Cases:</div> Retail, commerce, logistics  
-            <div class="label">Ecosystem Role:</div> Commercial operations  
-            <div class="label">Deployment Options:</div> Cloud  
-        </div>
-
-        <div class="card">
-            <h4>Luci Creator</h4>
-            <div class="label">System Tier:</div> Tier II  
-            <div class="label">System Class:</div> Creative Intelligence Engine  
-            <div class="label">Core Capabilities:</div> Generative cognition, creative workflows  
-            <div class="label">Primary Use Cases:</div> Art, media, content creation  
-            <div class="label">Ecosystem Role:</div> Creator layer  
-            <div class="label">Deployment Options:</div> Local, Cloud  
-        </div>
-
-        <div class="card">
-            <h4>Luci_Core SDK</h4>
-            <div class="label">System Tier:</div> Tier I  
-            <div class="label">System Class:</div> Developer SDK  
-            <div class="label">Core Capabilities:</div> API access, agent tools  
-            <div class="label">Primary Use Cases:</div> Developer integration  
-            <div class="label">Ecosystem Role:</div> Developer foundation  
-            <div class="label">Deployment Options:</div> Local  
-        </div>
-
-        <div class="card">
-            <h4>Luci Core</h4>
-            <div class="label">System Tier:</div> Tier I  
-            <div class="label">System Class:</div> Core Cognitive Engine  
-            <div class="label">Core Capabilities:</div> Base reasoning, adaptive logic  
-            <div class="label">Primary Use Cases:</div> Foundation intelligence  
-            <div class="label">Ecosystem Role:</div> Core engine  
-            <div class="label">Deployment Options:</div> Local  
-        </div>
-
-        <div class="card">
-            <h4>Luci Civic Emergency</h4>
-            <div class="label">System Tier:</div> Tier II  
-            <div class="label">System Class:</div> Civic Response Intelligence  
-            <div class="label">Core Capabilities:</div> Emergency modeling, civic coordination  
-            <div class="label">Primary Use Cases:</div> City‑scale emergency response  
-            <div class="label">Ecosystem Role:</div> Civic intelligence  
-            <div class="label">Deployment Options:</div> Cloud  
-        </div>
-
-        <div class="card">
-            <h4>Luci Mental Health</h4>
-            <div class="label">System Tier:</div> Tier II  
-            <div class="label">System Class:</div> Cognitive Wellness Engine  
-            <div class="label">Core Capabilities:</div> Emotional modeling, supportive cognition  
-            <div class="label">Primary Use Cases:</div> Mental health support  
-            <div class="label">Ecosystem Role:</div> Wellness intelligence  
-            <div class="label">Deployment Options:</div> Local, Cloud  
-        </div>
-
-    </div>
-</section>
-
-<section>
-    <h3>Opportunity</h3>
-    <p>
-        The global demand for cognitive intelligence systems is accelerating across every major industry.  
-        Enterprises, creators, governments, and humanitarian organizations are seeking adaptive, emotionally aware, multi‑agent intelligence platforms capable of scaling across complex environments.  
-        Cognitive Intelligence Labs is positioned at the center of this transformation, delivering sovereign‑grade architectures and a 14‑system ecosystem built for the next era of intelligence.
-    </p>
-</section>
-
-<section>
-    <h3>Founder Story</h3>
-    <p>
-        Cognitive Intelligence Labs was founded by Xavier, an innovator driven by a vision of sovereign cognitive architectures and emotionally adaptive intelligence systems.  
-        The Luci Ecosystem represents years of conceptual development, experimentation, and refinement — culminating in a unified cognitive framework designed to scale across industries and empower humanity’s next leap forward.
-    </p>
-</section>
-
-<section>
-    <h3>Contact</h3>
-    <p>
-        For partnerships, enterprise integration, or research collaboration:<br><br>
-        <strong>Email:</strong> CognitiveIntelligenceLabs@outlook.com
-    </p>
-</section>
+    </section>
+</main>
 
 <footer>
-    © 2026 Cognitive Intelligence Labs — All Rights Reserved
+    <div class="footer-left">
+        <span>© 2026 Cognitive Intelligence Labs</span>
+        <span>·</span>
+        <span>All Rights Reserved</span>
+    </div>
+    <div class="footer-right">
+        <a class="footer-link" href="https://linktr.ee/CognitiveIntelligenceLabs" target="_blank">Linktree</a>
+        <span>·</span>
+        <span>Emperor Luci · LuciAIOS · Luci Ecosystem</span>
+    </div>
 </footer>
+
+<script>
+    // Smooth scroll to section
+    function scrollToSection(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const offset = window.scrollY + rect.top - 80; // account for header
+        window.scrollTo({ top: offset, behavior: "smooth" });
+    }
+
+    // GSAP animations
+    window.addEventListener("load", () => {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero orbs floating
+        gsap.to(".orb-1", {
+            y: 30,
+            x: 20,
+            duration: 6,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        });
+
+        gsap.to(".orb-2", {
+            y: -40,
+            x: -30,
+            duration: 7,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        });
+
+        gsap.to(".orb-3", {
+            y: 25,
+            x: -15,
+            duration: 5.5,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        });
+
+        // Hero mesh subtle pulse
+        gsap.to(".hero-mesh-core", {
+            scale: 1.04,
+            duration: 4,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        });
+
+        // Hero entrance
+        gsap.from(".hero-left", {
+            opacity: 0,
+            y: 40,
+            duration: 1.1,
+            ease: "power3.out"
+        });
+
+        gsap.from(".hero-right", {
+            opacity: 0,
+            y: 40,
+            duration: 1.1,
+            ease: "power3.out",
+            delay: 0.2
+        });
+
+        // Scroll‑triggered section reveals
+        gsap.utils.toArray("section").forEach((sec) => {
+            gsap.from(sec, {
+                opacity: 0,
+                y: 40,
+                duration: 0.9,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: sec,
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+
+        // System cards hover lift (subtle)
+        gsap.utils.toArray(".system-card").forEach((card) => {
+            card.addEventListener("mouseenter", () => {
+                gsap.to(card, { y: -4, duration: 0.2, ease: "power2.out" });
+            });
+            card.addEventListener("mouseleave", () => {
+                gsap.to(card, { y: 0, duration: 0.2, ease: "power2.out" });
+            });
+        });
+    });
+</script>
 
 </body>
 </html>
