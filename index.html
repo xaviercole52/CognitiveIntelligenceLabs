@@ -29,12 +29,23 @@
             background: #000 !important;
         }
 
-        /* DEMO BOXES (TikTok / Facebook embeds) */
+        /* DEMO BOXES (TikTok embeds) */
         .demo-box {
             background-color: #000 !important;
             padding: 20px;
             border-radius: 8px;
             overflow: hidden;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cil-logo-img {
+            height: 48px;
+            width: auto;
         }
 
         /* FORCE TIKTOK EMBED TO BE DARK */
@@ -709,9 +720,8 @@
         }
 
         .hero-logo {
-            width: 100px;
-            max-width: 420px;
-            margin: 26px 0;
+            width: 180px;
+            margin: 20px 0;
             display: block;
             filter: drop-shadow(0 0 22px rgba(56, 189, 248, 0.35));
         }
@@ -761,9 +771,14 @@
 
 <header>
     <div class="nav-left">
-        <div class="nav-logo"></div>
+        <div class="nav-logo">
+            <img src="assets/Cognitive Intelligence Labs Floating Logo 2.png"
+                 alt="Cognitive Intelligence Labs Floating Logo"
+                 class="cil-logo-img">
+        </div>
         <div class="nav-title">Cognitive Intelligence Labs</div>
     </div>
+
     <div class="nav-right">
         <div class="nav-link" onclick="scrollToSection('mission')">Mission</div>
         <div class="nav-link" onclick="scrollToSection('systems')">Luci Ecosystem</div>
@@ -784,7 +799,7 @@
         </div>
 
         <!-- LOGO CLEANLY INSERTED -->
-        <img src="assets/Cognitive Intelligence Labs Floating Logo.png" alt="Cognitive Intelligence Labs Floating Logo" class="hero-logo">
+        <img src="assets\Cognitive Intelligence Labs Floating Logo.png" alt="Cognitive Intelligence Labs Logo" class="hero-logo">
 
         <h1 class="hero-title">
             Building the <span>Future of Cognitive Intelligence</span>
