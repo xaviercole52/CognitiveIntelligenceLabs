@@ -91,6 +91,53 @@
         .linktree-btn:hover {
             background-color: #2fbf82;
         }
+
+        #community-cta {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .community-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .cta-button {
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        #whats-new {
+            padding: 60px 0;
+        }
+
+        .updates-list {
+            max-width: 700px;
+            margin: 40px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .update-item {
+            background: #111;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .update-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+         }
+
+         .update-desc {
+             opacity: 0.8;
+         }
     </style>
 </head>
 
@@ -1217,6 +1264,39 @@
         </div>
     </section>
 
+    <section id="whats-new" class="section">
+        <div class="section-header">
+            <div class="section-eyebrow">Updates</div>
+            <div class="section-title">What’s New in the Luci Ecosystem</div>
+            <div class="section-subtitle">
+                Recent improvements, releases, and ecosystem advancements.
+            </div>
+        </div>
+
+        <div class="updates-list">
+            <div class="update-item">
+                <div class="update-title">LuciAIOS Installer Updated</div>
+                <div class="update-desc">
+                    New branding, custom icon integration, and improved ONEDIR packaging.
+                </div>
+            </div>
+
+            <div class="update-item">
+                <div class="update-title">Ecosystem Routing Improvements</div>
+                <div class="update-desc">
+                    Enhanced YouTube playback fallback and media routing stability.
+                </div>
+            </div>
+
+            <div class="update-item">
+                <div class="update-title">Agent Architecture Enhancements</div>
+                <div class="update-desc">
+                    WeatherAgent, AutonomyAgent, and EventBus debugging completed.
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- OPPORTUNITY & CONTACT -->
     <section id="contact">
         <div class="section-header">
@@ -1274,6 +1354,26 @@
         </div>
     </section>
 </main>
+
+    <section id="community-cta" class="section">
+        <div class="section-header">
+            <div class="section-eyebrow">Community</div>
+            <div class="section-title">Join the Cognitive Intelligence Labs Ecosystem</div>
+            <div class="section-subtitle">
+                Connect with developers, creators, and early adopters building sovereign AI systems.
+            </div>
+        </div>
+
+        <div class="community-buttons">
+            <a class="cta-button discord-btn" href="https://discord.gg/hZVfC44Qc" target="_blank">
+                Join the Discord
+            </a>
+
+            <a class="cta-button linktree-btn" href="https://linktr.ee/CognitiveIntelligenceLabs" target="_blank">
+                Explore Linktree
+            </a>
+        </div>
+    </section>
 
 <footer>
     <div class="footer-left">
